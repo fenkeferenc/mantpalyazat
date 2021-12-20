@@ -1,5 +1,5 @@
 from tkinter import *
-from datetime import datetime
+from datetime import date, datetime
 import requests
 import wikipedia
 import webbrowser
@@ -47,7 +47,16 @@ def main():
         current_time = now.strftime("%D")
         output("The current date is:"+ current_time)
 
-
+    if "mars" in user_input:
+        if "weather" in user_input:
+            f = r"https://api.nasa.gov/insight_weather/?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj&feedtype=json"
+            data = requests.get(f)
+            tt = json.loads(data.text)
+            for i in tt:
+                result = dict(tt)
+                final_result = str(result[i]['HWS']['av'])
+                output("The average temperature on Mars in this month was: \n" + final_result + "C°")
+                break
 
     elif "weather" in user_input.lower():
         base_url = "http://api.openweathermap.org/data/2.5/weather?"

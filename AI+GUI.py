@@ -32,7 +32,7 @@ def main():
         input("Press enter to exit")
         exit()
 
-    elif "time" in user_input.lower():
+    if "time" in user_input.lower():
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         output("The current time is:" + current_time)

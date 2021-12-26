@@ -70,7 +70,7 @@ def main():
             output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C degree(s)"
                   "\n The weather in " +city_name +" is: "+
                             str(weather_description))
-        
+
         else:
             output(" City Not Found ")
         
@@ -126,7 +126,7 @@ root.config(menu=main_menu)
 
 chatWindow = Label(root, text=final_output, bd = 100, fg = "black", font = "Castellar", wraplength=500)
 chatWindow.pack()
-ImgWindow = Label(root, background="transparent", width=500)
+ImgWindow = Label(root, width=500)
 ImgWindow.pack()
 
 def worker():

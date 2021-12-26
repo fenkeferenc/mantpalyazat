@@ -1,9 +1,11 @@
 from tkinter import *
-from datetime import date, datetime
+from datetime import datetime
 import requests
 import wikipedia
 import webbrowser
 import json
+from ttkthemes import ThemedTk
+from PIL import ImageTk, Image
 
 #---------------------------------Backend---------------------------------#
 w_api_key = "76ce09d339c3310433855fceee368b9d"
@@ -68,7 +70,7 @@ def main():
             output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C degree(s)"
                   "\n The weather in " +city_name +" is: "+
                             str(weather_description))
-
+        
         else:
             output(" City Not Found ")
         
@@ -91,7 +93,7 @@ def main():
         except:
             print("Wrong input")
 
-    elif "picture of the day" in user_input:
+    elif "picture of the day" in user_input or user_input == "apod":
         f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
         data = requests.get(f)
         tt = json.loads(data.text)
@@ -108,7 +110,7 @@ def main():
 #-------------------------------------------Backend---------------------------------------#
 #------------------------------------------Frontend---------------------------------------#
 
-root = Tk()
+root = ThemedTk(theme="arc")
 root.title("Chat Bot")
 root.geometry("500x600")
 root.resizable(width=FALSE, height=FALSE)
@@ -124,6 +126,8 @@ root.config(menu=main_menu)
 
 chatWindow = Label(root, text=final_output, bd = 100, fg = "black", font = "Castellar", wraplength=500)
 chatWindow.pack()
+ImgWindow = Label(root, background="transparent", width=500)
+ImgWindow.pack()
 
 def worker():
     print(str(raw_input.get()))
@@ -139,5 +143,5 @@ Button.place(x=6, y=500, height=88)
 
 
 root.bind('<Return>', lambda event=None: Button.invoke())
-
+root.attributes('-topmost', True)
 root.mainloop()

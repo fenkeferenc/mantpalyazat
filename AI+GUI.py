@@ -5,7 +5,7 @@ import wikipedia
 import webbrowser
 import json
 from ttkthemes import ThemedTk
-from PIL import ImageTk, Image
+from PIL import Image
 
 #---------------------------------Backend---------------------------------#
 w_api_key = "76ce09d339c3310433855fceee368b9d"
@@ -70,6 +70,9 @@ def main():
             output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C degree(s)"
                   "\n The weather in " +city_name +" is: "+
                             str(weather_description))
+
+            img = Image.open(r'E:\Phogramozas\fizika_AI\overcast clouds\1.png')
+            img.show(img)
 
         else:
             output(" City Not Found ")

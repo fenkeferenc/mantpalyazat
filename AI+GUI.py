@@ -171,12 +171,12 @@ ImgWindow = PhotoImage(height=220)
 Label(root, image=ImgWindow).pack()
 
 raw_input = StringVar()
-messageWindow = Entry(root, textvariable=raw_input, bg="black", foreground="#00ffff", font=("Arial", 25))
-messageWindow.place(x=128, y=500, height=88)
+messageWindow = Entry(root, textvariable=raw_input, bg="#202020", foreground="#00ffff", font=("Arial", 25))
+messageWindow.place(x=5, y=500, height=88)
 
-Button= Button(root, text="Send",  width="12", height=5,
-                    bd=0, bg="#0080ff", activebackground="#00bfff",foreground='#ffffff',font=("Arial", 12), command=main)
-Button.place(x=6, y=500, height=88)
+Button= Button(root, text="Send",  width=12, height=5,
+                    bd=0, bg="#275685", activebackground="#00bfff",foreground='#ffffff',font=("Arial", 12), command=main)
+Button.place(x=378, y=500, height=88)
 
 
 root.bind('<Return>', lambda event=None: Button.invoke())

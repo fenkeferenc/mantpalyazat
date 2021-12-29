@@ -11,18 +11,22 @@ from random import randint
 #---------------------------------Backend---------------------------------#
 w_api_key = "76ce09d339c3310433855fceee368b9d"
 final_output = ""
+count = 0
+apod = 0
+gtt = ""
 #--------------------------------#
 def enter(event=None):
     ()
 #--------------------------------#
 def weatherimg():
     global ImgWindow
+    global count
     os.chdir(os.path.dirname(__file__))
     r = str(randint(1,3))
     img = PhotoImage(weather_description + r + ".png")
     ImgWindow.configure(file=img)
+    count = count + 1
     
-
 def output(x):
     global final_output
     final_output = x
@@ -30,11 +34,14 @@ def output(x):
     global chatWindow
     chatWindow.configure(text=final_output)
     messageWindow.delete(0,"end")
-
-
 def main():
-
+    global count
+    global ImgWindow
     user_input = str(raw_input.get()).lower()
+    
+    if count > 0:
+        count = 0
+        ImgWindow.blank()
 
     if "exit" in user_input.lower():
         output("[+] Program stopped")
@@ -44,11 +51,13 @@ def main():
     if "time" in user_input.lower():
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        output("The current time is:" + current_time)
         if "date" in user_input.lower():
             now = datetime.now()
-            current_time = now.strftime("%D")
-            output("And the current date is:" + current_time)
+            current_date = now.strftime("%D")
+            output("The current time is: " + current_time + "\n"
+                   "And the current date is: " + current_date)
+        else:
+            output("The current time is: " + current_time)
             
 
     elif "date" in user_input.lower():
@@ -111,11 +120,25 @@ def main():
             print("Wrong input")
 
     elif "picture of the day" in user_input or user_input == "apod":
+        global apod
+        global gtt
+        apod = 1
+        print("set apod to 1")
         f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
         data = requests.get(f)
-        tt = json.loads(data.text)
-        output("The picture of the day according to NASA is: \n" + tt["title"])
-        webbrowser.open(tt["url"])
+        gtt = json.loads(data.text)
+        output("The astronomy picture of the day is: \n" + gtt["title"] + "\n Do you want to hear the explanation of this picture?")
+        webbrowser.open(gtt["url"])
+
+    elif apod > 0:
+        apod = 0
+        if user_input == "yes":
+            output("The explanation of the picture is:\n" + gtt["explanation"])
+        elif user_input == "no":
+            output("Okay.")
+        else:
+            output("Answer with yes or no please")
+            return
 
     elif "your name" in user_input:
         output("I dont have a name yet:(")
@@ -141,10 +164,10 @@ main_menu.add_command(label="Quit", command=exit)
 root.config(menu=main_menu)
 #----------------------------------#
 
-chatWindow = Label(root, text=final_output, bd = 100, fg = "black", font = "Castellar", wraplength=500)
+chatWindow = Label(root, text=final_output, bd = 10, fg = "black", font = "Castellar", wraplength=500)
 chatWindow.pack()
 
-ImgWindow = PhotoImage(file=r"E:\Phogramozas\fizika_AI\clouds3.png", height=220)
+ImgWindow = PhotoImage(height=220)
 Label(root, image=ImgWindow).pack()
 
 raw_input = StringVar()

@@ -6,6 +6,8 @@ import webbrowser
 import json
 from ttkthemes import ThemedTk
 from PIL import Image
+import os
+from random import randint
 
 #---------------------------------Backend---------------------------------#
 w_api_key = "76ce09d339c3310433855fceee368b9d"
@@ -14,6 +16,11 @@ final_output = ""
 def enter(event=None):
     ()
 #--------------------------------#
+def weatherimg():
+    os.chdir(os.path.dirname(__file__))
+    r = str(randint(1,3))
+    img = Image.open(weather_description+r+".png")
+    img.show(img)
 
 def output(x):
     global final_output
@@ -64,15 +71,22 @@ def main():
             celsius = current_temperature -272,15 
             #----------------------------------------#
             z = x["weather"]
-
+            global weather_description
             weather_description = z[0]["description"]
 
             output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C degree(s)"
                   "\n The weather in " +city_name +" is: "+
                             str(weather_description))
 
-            img = Image.open(r'E:\Phogramozas\fizika_AI\overcast clouds\1.png')
-            img.show(img)
+            if "rain" in weather_description:
+                weather_description = "rain"
+                weatherimg()
+
+            elif "cloud" in weather_description:
+                weather_description = "clouds"
+                weatherimg()
+            else:
+                pass
 
         else:
             output(" City Not Found ")

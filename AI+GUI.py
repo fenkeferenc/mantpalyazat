@@ -5,7 +5,6 @@ import wikipedia
 import webbrowser
 import json
 from ttkthemes import ThemedTk
-from PIL import Image
 import os
 from random import randint
 
@@ -17,10 +16,12 @@ def enter(event=None):
     ()
 #--------------------------------#
 def weatherimg():
+    global ImgWindow
     os.chdir(os.path.dirname(__file__))
     r = str(randint(1,3))
-    img = Image.open(weather_description+r+".png")
-    img.show(img)
+    img = PhotoImage(weather_description + r + ".png")
+    ImgWindow.configure(file=img)
+    
 
 def output(x):
     global final_output
@@ -29,8 +30,7 @@ def output(x):
     global chatWindow
     chatWindow.configure(text=final_output)
     messageWindow.delete(0,"end")
-    
-    
+
 
 def main():
 
@@ -94,8 +94,8 @@ def main():
     elif "search" in user_input.lower():
         try:
             lowcase = str(user_input.lower())
-            print("Searching for: " + lowcase)
-            data = lowcase.replace("search", "")
+            data = lowcase.replace("search ", "")
+            print("Searching for: " + data)
             new = data.translate({ord(i): None for i in ' '})
             output(wikipedia.summary(new, sentences=5))
         except:
@@ -143,12 +143,9 @@ root.config(menu=main_menu)
 
 chatWindow = Label(root, text=final_output, bd = 100, fg = "black", font = "Castellar", wraplength=500)
 chatWindow.pack()
-ImgWindow = Label(root, width=500)
-ImgWindow.pack()
 
-def worker():
-    print(str(raw_input.get()))
-    
+ImgWindow = PhotoImage(file=r"E:\Phogramozas\fizika_AI\clouds3.png", height=220)
+Label(root, image=ImgWindow).pack()
 
 raw_input = StringVar()
 messageWindow = Entry(root, textvariable=raw_input, bg="black", foreground="#00ffff", font=("Arial", 25))

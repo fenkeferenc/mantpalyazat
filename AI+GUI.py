@@ -14,6 +14,7 @@ final_output = ""
 count = 0
 apod = 0
 gtt = ""
+os.chdir(os.path.dirname(__file__))
 #--------------------------------#
 def enter(event=None):
     ()
@@ -21,7 +22,6 @@ def enter(event=None):
 def weatherimg():
     global ImgWindow
     global count
-    os.chdir(os.path.dirname(__file__))
     r = str(randint(1,3))
     img = PhotoImage(weather_description + r + ".png")
     ImgWindow.configure(file=img)
@@ -140,6 +140,17 @@ def main():
             output("Answer with yes or no please")
             return
 
+    elif "Where a" in user_input or user_input == "wai":
+        link = 'https://ipinfo.io/json'
+        response = requests.get(link, verify = True)
+        result = response.json()
+        result = result['region']
+        output("Your current location is:\n" + result)
+        img = PhotoImage(result+".png")
+        ImgWindow.configure(file=img)
+        count = count + 1
+
+
     elif "your name" in user_input:
         output("I dont have a name yet:(")
 
@@ -152,7 +163,7 @@ def main():
 
 root = ThemedTk(theme="arc")
 root.title("Chat Bot")
-root.geometry("500x600")
+root.geometry("600x600")
 root.resizable(width=FALSE, height=FALSE)
 
 #----------------Menu--------------#
@@ -164,19 +175,19 @@ main_menu.add_command(label="Quit", command=exit)
 root.config(menu=main_menu)
 #----------------------------------#
 
-chatWindow = Label(root, text=final_output, bd = 10, fg = "black", font = "Castellar", wraplength=500)
+chatWindow = Label(root, text=final_output, bd = 10, fg = "black", font = "Castellar", wraplength=599)
 chatWindow.pack()
 
-ImgWindow = PhotoImage(height=220)
+ImgWindow = PhotoImage(height=400)
 Label(root, image=ImgWindow).pack()
 
 raw_input = StringVar()
-messageWindow = Entry(root, textvariable=raw_input, bg="#202020", foreground="#00ffff", font=("Arial", 25))
-messageWindow.place(x=5, y=500, height=88)
+messageWindow = Entry(root, textvariable=raw_input, bg="#202020", foreground="#3D93E8", font=("Arial", 25))
+messageWindow.place(x=5, y=500, height=85, width=440)
 
-Button= Button(root, text="Send",  width=12, height=5,
-                    bd=0, bg="#275685", activebackground="#00bfff",foreground='#ffffff',font=("Arial", 12), command=main)
-Button.place(x=378, y=500, height=88)
+Button= Button(root, text="Send", height=5,
+                    bd=0, bg="#275685", activebackground="#90A9BF",foreground='#ffffff',font=("Arial", 20),command=main)
+Button.place(x=450, y=500, height=85, width=143)
 
 
 root.bind('<Return>', lambda event=None: Button.invoke())

@@ -140,7 +140,7 @@ def main():
             output("Answer with yes or no please")
             return
 
-    elif "Where a" in user_input or user_input == "wai":
+    elif "where a" in user_input or user_input == "wai":
         link = 'https://ipinfo.io/json'
         response = requests.get(link, verify = True)
         result = response.json()

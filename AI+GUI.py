@@ -26,7 +26,15 @@ def weatherimg():
     img = PhotoImage(weather_description + r + ".png")
     ImgWindow.configure(file=img)
     count = count + 1
-    
+
+def help():
+    helpwindow = Toplevel(root)
+    helpwindow.geometry("450x403+912+158")
+    helpwindow.resizable(width=FALSE, height=FALSE)
+    helptext = Label(helpwindow, text="Keyword list: \n date \n time \n weather \n search \n picture of the day \n Where am i/Where are we etc... \n Search *your word*",
+                     fg="black", bd=35, font=("Arial",20))
+    helptext.pack()
+
 def output(x):
     global final_output
     final_output = x
@@ -34,6 +42,7 @@ def output(x):
     global chatWindow
     chatWindow.configure(text=final_output)
     messageWindow.delete(0,"end")
+
 def main():
     global count
     global ImgWindow
@@ -83,9 +92,8 @@ def main():
             global weather_description
             weather_description = z[0]["description"]
 
-            output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C degree(s)"
-                  "\n The weather in " +city_name +" is: "+
-                            str(weather_description))
+            output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C°"
+                  "\n The weather in " +city_name +" is: "+ str(weather_description))
 
             if "rain" in weather_description:
                 weather_description = "rain"
@@ -112,12 +120,8 @@ def main():
 
 
     elif "lang" in user_input.lower():
-        try:
-            a = input("Enter search language: ")
-            wikipedia.set_lang(a)
-            print("language succesfully set to "+ a)
-        except:
-            print("Wrong input")
+        wikipedia.set_lang(user_input[5:])
+        print("language succesfully set to "+ user_input[5:])
 
     elif "picture of the day" in user_input or user_input == "apod":
         global apod
@@ -132,7 +136,7 @@ def main():
 
     elif apod > 0:
         apod = 0
-        if user_input == "yes":
+        if "yes" in user_input:
             output("The explanation of the picture is:\n" + gtt["explanation"])
         elif user_input == "no":
             output("Okay.")
@@ -158,6 +162,7 @@ def main():
         output("Keyword list: \n time \n date \n weather \n search")
     else:
         output("asd")
+
 #-------------------------------------------Backend---------------------------------------#
 #------------------------------------------Frontend---------------------------------------#
 
@@ -167,11 +172,9 @@ root.geometry("600x600")
 root.resizable(width=FALSE, height=FALSE)
 
 #----------------Menu--------------#
-main_menu = Menu(root)
-
-file_menu = Menu(root)
-
+main_menu = Menu(root, background='blue')
 main_menu.add_command(label="Quit", command=exit)
+main_menu.add_command(label="Help", command=help)
 root.config(menu=main_menu)
 #----------------------------------#
 

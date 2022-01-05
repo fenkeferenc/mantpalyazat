@@ -75,8 +75,14 @@ def main():
         output("The current date is:"+ current_time)
 
     elif "weather" in user_input.lower():
+        if "in" in user_input:
+            city = user_input.split("in")[0::]
+            city_name = city[1]
+            print(city_name)
+        else:
+            city_name = "Kourou"
+            
         base_url = "http://api.openweathermap.org/data/2.5/weather?"
-        city_name = "Kourou"
         complete_url = base_url + "appid=" + w_api_key + "&q=" + city_name
         response = requests.get(complete_url)
         x = response.json()
@@ -172,7 +178,7 @@ root.geometry("600x600")
 root.resizable(width=FALSE, height=FALSE)
 
 #----------------Menu--------------#
-main_menu = Menu(root, background='blue')
+main_menu = Menu(root)
 main_menu.add_command(label="Quit", command=exit)
 main_menu.add_command(label="Help", command=help)
 root.config(menu=main_menu)

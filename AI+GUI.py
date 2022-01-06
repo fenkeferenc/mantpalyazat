@@ -1,4 +1,7 @@
-from tkinter import *
+try:
+    from tkinter import *
+except:
+    from _tkinter import *
 from datetime import datetime
 import requests
 import wikipedia
@@ -23,7 +26,8 @@ def weatherimg():
     global ImgWindow
     global count
     r = str(randint(1,3))
-    img = PhotoImage(weather_description + r + ".png")
+    test = "clouds3t.png"
+    img = PhotoImage(test)
     ImgWindow.configure(file=img)
     count = count + 1
 
@@ -95,7 +99,7 @@ def main():
             z = x["weather"]
             global weather_description
             weather_description = z[0]["description"]
-            output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C°"
+            output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C"
                   "\n The weather in " +city_name +" is: "+ str(weather_description))
 
             if "rain" in weather_description:

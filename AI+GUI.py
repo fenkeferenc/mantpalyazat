@@ -36,11 +36,9 @@ def help():
     helptext.pack()
 
 def output(x):
-    global final_output
-    final_output = x
-    print(final_output)
+    print(x)
     global chatWindow
-    chatWindow.configure(text=final_output)
+    chatWindow.configure(text=x)
     messageWindow.delete(0,"end")
 
 def main():
@@ -97,8 +95,7 @@ def main():
             z = x["weather"]
             global weather_description
             weather_description = z[0]["description"]
-            city_name = city_name.capitalize()
-            output(" The current temperature in "+city_name.capitalize()+" is: " + str(celsius).replace('(', '')[:3] +"C°"
+            output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C°"
                   "\n The weather in " +city_name +" is: "+ str(weather_description))
 
             if "rain" in weather_description:

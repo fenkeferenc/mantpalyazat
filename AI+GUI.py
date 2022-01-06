@@ -97,8 +97,8 @@ def main():
             z = x["weather"]
             global weather_description
             weather_description = z[0]["description"]
-
-            output(" The current temperature in "+city_name+" is: " + str(celsius).replace('(', '')[:3] +"C°"
+            city_name = city_name.capitalize()
+            output(" The current temperature in "+city_name.capitalize()+" is: " + str(celsius).replace('(', '')[:3] +"C°"
                   "\n The weather in " +city_name +" is: "+ str(weather_description))
 
             if "rain" in weather_description:
@@ -107,6 +107,9 @@ def main():
 
             elif "cloud" in weather_description:
                 weather_description = "clouds"
+                weatherimg()
+            elif "clear sky" in weather_description:
+                weather_description = "clear"
                 weatherimg()
             else:
                 pass

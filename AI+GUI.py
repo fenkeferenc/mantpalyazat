@@ -12,15 +12,18 @@ import os
 from random import randint
 
 # ---------------------------------Backend---------------------------------#
+#-------------------VARIABLE-------------------#
 w_api_key = "76ce09d339c3310433855fceee368b9d"
 final_output = ""
 count = 0
 apod = 0
 gtt = ""
 os.chdir(os.path.dirname(__file__))
+name = ""
+count_name = 0
+#-------------------VARIABLE-------------------#
 
-
-# --------------------------------#
+# --------------FUNTCION------------------#
 def enter(event=None):
     ()
 # --------------------------------#
@@ -42,12 +45,12 @@ def help():
     helptext.pack()
 
 def output(x):
-    print(x)
     global chatWindow
     chatWindow.configure(text=x)
     messageWindow.delete(0, "end")
+# --------------FUNTCION------------------#
 
-
+#---------------------------MAIN---------------------------#
 def main():
     global count
     global ImgWindow
@@ -79,11 +82,11 @@ def main():
         current_time = now.strftime("%D")
         output("The current date is:" + current_time)
 
+    #--------------------------------Weather--------------------------------#
     elif "weather" in user_input.lower():
         if "in" in user_input:
             city = user_input.split("in")[0::]
             city_name = city[1]
-            print(city_name)
         else:
             city_name = "Kourou"
 
@@ -121,12 +124,12 @@ def main():
 
         else:
             output(" City Not Found ")
+    #--------------------------------Weather--------------------------------#
 
     elif "search" in user_input.lower():
         try:
             lowcase = str(user_input.lower())
             data = lowcase.replace("search ", "")
-            print("Searching for: " + data)
             new = data.translate({ord(i): None for i in ' '})
             output(wikipedia.summary(new, sentences=5))
         except:
@@ -135,29 +138,30 @@ def main():
 
     elif "lang" in user_input.lower():
         wikipedia.set_lang(user_input[5:])
-        print("language succesfully set to " + user_input[5:])
+        output("language succesfully set to " + user_input[5:])
 
+    #-------------------------APOD-------------------------#
     elif "picture of the day" in user_input or user_input == "apod":
         global apod
         global gtt
         apod = 1
-        print("set apod to 1")
         f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
         data = requests.get(f)
         gtt = json.loads(data.text)
         output("The astronomy picture of the day is: \n" + gtt[
             "title"] + "\n Do you want to hear the explanation of this picture?")
         webbrowser.open(gtt["url"])
-
     elif apod > 0:
         apod = 0
         if "yes" in user_input:
             output("The explanation of the picture is:\n" + gtt["explanation"])
-        elif user_input == "no":
+        elif "no" in user_input:
             output("Okay.")
         else:
             output("Answer with yes or no please")
-            return
+            apod = 1
+    #-------------------------APOD-------------------------#
+            
 
     elif "where a" in user_input or user_input == "wai":
         link = 'https://ipinfo.io/json'
@@ -169,14 +173,34 @@ def main():
         ImgWindow.configure(file=img)
         count = count + 1
 
-
+    #-------------  Name -------------#
     elif "your name" in user_input:
-        output("I dont have a name yet:(")
+        global name
+        global count_name
+        if name != "":
+            output("My name is: "+name)
+        else:
+            output("I dont have a name yet, \n would you want to give me one?")
+            count_name = 1
+    elif count_name == 1:
+        if "yes" in user_input:
+            output("Okay, you can write it now.")
+            count_name = 2
+        elif "no" in user_input:
+            output("Okay")
+            count_name = 0
+        else:
+            output("Answer with yes or no please!")
+            count_name = 1
+    elif count_name == 2:
+        name = user_input
+        output("Okay, my name is: "+name+" from now." )
+        count_name = 0
+    #-------------  Name -------------#
 
-    elif "help" in user_input.lower():
-        output("Keyword list: \n time \n date \n weather \n search")
+
     else:
-        output("asd")
+        output("Unknown command \n If you want to see the list of the keywords, you can click on the help button.")
 
 # -------------------------------------------Backend---------------------------------------#
 # ------------------------------------------Frontend---------------------------------------#

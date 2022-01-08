@@ -60,11 +60,6 @@ def main():
         count = 0
         ImgWindow.blank()
 
-    if "exit" in user_input.lower():
-        output("[+] Program stopped")
-        input("Press enter to exit")
-        exit()
-
     if "time" in user_input.lower():
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
@@ -212,7 +207,6 @@ root.resizable(width=FALSE, height=FALSE)
 
 # ----------------Menu--------------#
 main_menu = Menu(root)
-main_menu.add_command(label="Quit", command=exit)
 main_menu.add_command(label="Help", command=help)
 root.config(menu=main_menu)
 # ----------------------------------#

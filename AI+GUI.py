@@ -7,7 +7,6 @@ import requests
 import wikipedia
 import webbrowser
 import json
-from ttkthemes import ThemedTk
 import os
 from random import randint
 
@@ -54,7 +53,7 @@ def output(x):
 def main():
     global count
     global ImgWindow
-    user_input = str(raw_input.get()).lower()
+    user_input = str(raw_input.get()).lower()    
 
     if count > 0:
         count = 0
@@ -137,6 +136,7 @@ def main():
 
     #-------------------------APOD-------------------------#
     elif "picture of the day" in user_input or user_input == "apod":
+        chatWindow.config(font=("Castellar", 15))
         global apod
         global gtt
         apod = 1
@@ -148,7 +148,7 @@ def main():
         webbrowser.open(gtt["url"])
     elif apod > 0:
         apod = 0
-        if "yes" in user_input:
+        if "yes" in user_input:            
             output("The explanation of the picture is:\n" + gtt["explanation"])
         elif "no" in user_input:
             output("Okay.")
@@ -200,7 +200,7 @@ def main():
 # -------------------------------------------Backend---------------------------------------#
 # ------------------------------------------Frontend---------------------------------------#
 
-root = ThemedTk(theme="arc")
+root = Tk()
 root.title("Chat Bot")
 root.geometry("600x600")
 root.resizable(width=FALSE, height=FALSE)
@@ -211,7 +211,7 @@ main_menu.add_command(label="Help", command=help)
 root.config(menu=main_menu)
 # ----------------------------------#
 
-chatWindow = Label(root, text=final_output, bd=10, fg="black", font="Castellar", wraplength=599)
+chatWindow = Label(root, text=final_output, bd=10, fg="black", font=("Castellar", 20), wraplength=599)
 chatWindow.pack()
 
 ImgWindow = PhotoImage(height=400)

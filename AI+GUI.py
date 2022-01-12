@@ -58,6 +58,9 @@ def main():
     if count > 0:
         count = 0
         ImgWindow.blank()
+    
+    if "picture of the day" not in user_input:
+        chatWindow.configure(font=("Castellar", 20))
 
     if "time" in user_input.lower():
         now = datetime.now()
@@ -136,7 +139,6 @@ def main():
 
     #-------------------------APOD-------------------------#
     elif "picture of the day" in user_input or user_input == "apod":
-        chatWindow.config(font=("Castellar", 15))
         global apod
         global gtt
         apod = 1
@@ -148,8 +150,9 @@ def main():
         webbrowser.open(gtt["url"])
     elif apod > 0:
         apod = 0
-        if "yes" in user_input:            
+        if "yes" in user_input:
             output("The explanation of the picture is:\n" + gtt["explanation"])
+            chatWindow.config(font=("Castellar",13))
         elif "no" in user_input:
             output("Okay.")
         else:

@@ -103,8 +103,7 @@ def main():
             global weather_description
             weather_description = z[0]["description"]
             output(" The current temperature in " + city_name + " is: " + str(celsius).replace('(', '')[:3] + "C"
-                                                                                                              "\n The weather in " + city_name + " is: " + str(
-                weather_description))
+                                "\n The weather in " + city_name + " is: " + str(weather_description))
 
             if "rain" in weather_description:
                 weather_description = "rain"

@@ -195,8 +195,7 @@ def main():
         output("Okay, my name is: "+name+" from now." )
         count_name = 0
     #-------------  Name -------------#
-
-
+    
     else:
         output("Unknown command \n If you want to see the list of the keywords, you can click on the help button.")
 

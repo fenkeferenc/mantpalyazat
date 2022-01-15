@@ -4,15 +4,19 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     </head>
 </html>
+    
     <body>
-        <div class="img">
-            <img src="{{ image }}" alt="Failed to load image" height="500rem" width="800rem">
-        </div>
-        <div class="form">
-            <form method="POST">
-                <input name="variable">
-                <input type="submit">
-            </form>
-        </div>
-    </body>
+        <div class="background"></div>
+            <p> {{ output }}</p>
+            <div class="img">
+                <img {{ image }} height="500rem" width="800rem">            
+            </div>
+            <div class="form flex-fill">
+                <form method="POST">
+                    <input name="variable">
+                    <button type="submit"> Send </button>
+                </form>
+            </div>
+        </body>
+    
 </form>

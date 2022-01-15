@@ -1,9 +1,11 @@
+from email.mime import image
 from flask import Flask, render_template, request
 from datetime import datetime
 import requests
 from random import randint
 import os
 
+weather = 0
 
 w_api_key = "76ce09d339c3310433855fceee368b9d"
 print(os.getcwd())
@@ -14,7 +16,8 @@ app.config['UPLOAD_FOLDER'] = imgfolder
 
 @app.route('/')
 def form():
-    return render_template('index.html')
+    return render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"))
+
 
 @app.route('/', methods=['POST'])
 def main():
@@ -27,14 +30,14 @@ def main():
         if "date" in user_input:
             now = datetime.now()
             current_date = now.strftime("%D")
-            return "The current time is: " + current_time + "<br> And the current date is: " + current_date + form()
+            return " <p> The current time is: " + current_time + "<br> And the current date is: " + current_date + form() + "</p>"
         else:
-            return "The current time is: " + current_time + form()
+            return "<p>The current time is: " + current_time + form() + "</p>"
     
     elif "date" in user_input:
         now = datetime.now()
         current_time = now.strftime("%D")
-        return "The current date is:" + current_time + form()
+        return "<p>The current date is:" + current_time + form() + "</p>"
 
     #--------------------------------Weather--------------------------------#
     elif "weather" in user_input.lower():
@@ -60,14 +63,16 @@ def main():
             
             weather_description = z[0]["description"]
             if "cloud" in weather_description:
-                weather_description = "clouds"
-                
-            w = weather_description + str(randint(1,3))+".png" 
+                weather_descriptionm = "clouds"
+            if "clear" in weather_description:
+                weather_descriptionm = "clear"
+
+            w = weather_descriptionm + str(randint(1,3))+".png" 
             imgpath = os.path.join(app.config['UPLOAD_FOLDER'], w)
             
-            return "<p> The current temperature in " + city_name + " is: " + str(celsius).replace('(', '')[:3] + "C° \n The weather in " + city_name + " is: " + str(weather_description)+"</p>" + render_template('index.html', image = imgpath)
+            return "<p> The current temperature in " + city_name + " is: " + str(celsius).replace('(', '')[:3] + "C° <br> The weather in  " + city_name + " is: " + str(weather_description)+"</p>" + render_template('index.html', image = "src="+imgpath)
 
     return form()
 
 if __name__ == '__main__':
-    app.run(host="192.168.0.13", port=5000)
+    app.run(host="192.168.0.20", port=5000)

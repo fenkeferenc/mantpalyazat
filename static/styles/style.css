@@ -1,14 +1,38 @@
-.img, form{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+html{
+    background-image: url('/static/img/background.webp');
 }
-img{
+.img{
+    float: left;
     margin: 0;
-    border: 0 ;
-}
-form{
-    padding-top: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-color: transparent;
+    border-radius: 1rem;
+    overflow: hidden;
     
 }
+.form{
+    width: 99%;
+    padding-top: 60vh;
+}
+p{
+    position: absolute;
+    right: 50%;
+}
+.form,.img{
+    position: absolute;
+    top: 15vh;
+}
+form{
+    width: 45%;
+    display:flex;
+    float: right;
+    height: 2.5rem;
+}
+.form input{
+    width: 75%;
+
+}
+.form button{
+    width: 24%;
+}
+

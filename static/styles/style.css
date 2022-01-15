@@ -1,5 +1,6 @@
 html{
     background-image: url('/static/img/background.webp');
+    width: 100%;
 }
 .img{
     float: left;
@@ -26,14 +27,36 @@ form{
     width: 45%;
     display:flex;
     float: right;
-    height: 2.5rem;
+    height: 4rem;
+    margin-bottom: 5px;
 }
 .form input{
     width: 75%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #b9b8b8;
+    padding: 12px;
     border: none;
-    
+    width: 75%;
+    outline: none;
+    transition: all .5s ease;
 }
-
+.form input:focus::placeholder{
+    color:transparent
+}
+.form input::placeholder{
+    color: #222;
+    transition: color 0.3s ease;    
+}
+.form input:focus{
+    border: none;
+    border-bottom: black;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-radius: 10px;
+}
 .form button{
-    width: 24%;
+    margin-left: 25px;
+    float: right;
+    width: 20%;
 }

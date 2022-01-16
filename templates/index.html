@@ -7,15 +7,17 @@
     
     <body>
         <div class="background"></div>
-            <p> {{ output }}</p>
             <div class="img">
-                <img {{ image }} height="500rem" width="800rem">            
+                <img {{ image }}> 
             </div>
             <div class="form">
                 <form method="POST">
                     <input name="variable" placeholder="Enter text">
-                    <button type="submit"> Send </button>
+                    <button type="submit" id="send"> Send </button>
                 </form>
+            </div>
+            <div class="background-2">
+                <p id="wiki"> {{ wiki|safe }} </p>
             </div>
         </body>
     

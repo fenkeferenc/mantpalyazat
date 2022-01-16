@@ -65,8 +65,12 @@ def main():
             weather_description = z[0]["description"]
             if "cloud" in weather_description:
                 weather_descriptionm = "clouds"
-            if "clear" in weather_description:
+            elif "clear" in weather_description:
                 weather_descriptionm = "clear"
+            elif "rain" in weather_description:
+                weather_descriptionm = "rain"
+            elif "fog" or "mist" in weather_description:
+                weather_descriptionm = "mist"
 
             w = weather_descriptionm + str(randint(1,3))+".png" 
             imgpath = os.path.join(app.config['UPLOAD_FOLDER'], w)
@@ -85,12 +89,12 @@ def main():
     elif "picture of the day" in user_input:
         global apod
         global gtt
+        apod = 1
         f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
         data = requests.get(f)
         gtt = json.loads(data.text)
         return render_template('index.html', wiki = "The astronomy picture of the day is: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
-                                "Do you want to hear the explanation of this picture?", image = "src=" + gtt["url"])
-
+                                "Do you want to hear the explanation of this picture?", image = "src=" + gtt["url"])    
     return form()
 
 if __name__ == '__main__':

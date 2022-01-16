@@ -115,6 +115,7 @@ def main():
             elif "clear sky" in weather_description:
                 weather_description = "clear"       
                 weatherimg()
+                
             else:
                 pass
 

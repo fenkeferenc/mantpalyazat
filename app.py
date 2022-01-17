@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from datetime import datetime
+from datetime import date, datetime
 import requests
 from random import randint
 import os
@@ -22,10 +22,34 @@ def form():
 
 @app.route('/', methods=['POST'])
 def main():
-    
+    global apod
+    global gtt
     raw_input = request.form['variable']
     user_input = str(raw_input.lower())
-    if "time" in user_input:
+    if apod == 1:
+        print("apod = 1")
+        if "yes" in user_input:
+            print("yes")
+            explain = gtt["explanation"].split(".")[0:3]
+            explain = str(explain).replace("['", "ű")
+            explain = explain.replace("']", "ű")
+            explain = explain.replace("', '", ".")
+            explain = explain.translate({ord(i): None for i in 'ű'})
+            explain = explain + "."
+            apod = 0
+            return render_template('index.html', image = "src=" + gtt["url"], wiki = str(explain))
+        elif "no" in user_input:
+            apod = 0
+            return render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"), wiki = "Okay.")
+        else:
+            apod = 1
+            return render_template('index.html', image = "src=" + gtt["url"], wiki = "Answer with yes or no please!")
+
+    elif "time" in user_input:
+        if "in" in user_input:
+            city = user_input.split("in")[0::]
+            
+
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         if "date" in user_input:
@@ -81,21 +105,21 @@ def main():
         try:
             lowcase = str(user_input)
             data = lowcase.replace("search ", "")
+            data = data.replace("for", "")
             new = data.translate({ord(i): None for i in ' '})
             return render_template('index.html', wiki = wikipedia.summary(new, sentences=5), image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"))
         except:
             return "Wikipedia page was not found" 
 
     elif "picture of the day" in user_input:
-        global apod
-        global gtt
         apod = 1
         f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
         data = requests.get(f)
         gtt = json.loads(data.text)
         return render_template('index.html', wiki = "The astronomy picture of the day is: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
-                                "Do you want to hear the explanation of this picture?", image = "src=" + gtt["url"])    
-    return form()
+                                "Do you want to hear the explanation of this picture?", image = "src=" + gtt["url"])
 
+
+    
 if __name__ == '__main__':
     app.run(host="192.168.0.20", port=5000)

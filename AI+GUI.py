@@ -151,7 +151,8 @@ def main():
     elif apod > 0:
         apod = 0
         if "yes" in user_input:
-            output("The explanation of the picture is:\n" + gtt["explanation"])
+            explain = gtt["explanation"].partition('.')[0] + '.'
+            output("The explanation of the picture is:\n" + explain)
             chatWindow.config(font=("Castellar",13))
         elif "no" in user_input:
             output("Okay.")
@@ -159,7 +160,6 @@ def main():
             output("Answer with yes or no please")
             apod = 1
     #-------------------------APOD-------------------------#
-            
 
     elif "where a" in user_input or user_input == "wai":
         link = 'https://ipinfo.io/json'

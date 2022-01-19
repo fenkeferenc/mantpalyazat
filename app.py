@@ -37,15 +37,11 @@ def main():
         if "yes" in user_input:
             print("yes")
             explain = gtt["explanation"].split(".")[0:3]
-            explain = str(explain).replace("['", "---")
-            explain = explain.replace("']", "---")
-            explain = explain.replace("', '", ".")
-            explain = explain.replace("', "+'"', ".")
-            explain = explain.replace('", '+"'", ".")
-            explain = explain.translate({ord(i): None for i in '---'})
-            explain = explain + "."
             apod = 0
-            return render_template('index.html', image = img(gtt["url"]), wiki = str(explain))
+            out = ""
+            for i in range(0,len(explain)):
+                out += explain[i] + "."
+            return render_template('index.html', image = img(gtt["url"]), wiki = out)
         elif "no" in user_input:
             apod = 0
             return render_template('index.html', wiki = "Okay.")

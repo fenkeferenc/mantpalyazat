@@ -1,24 +1,30 @@
 from flask import Flask, render_template, request
-from datetime import date, datetime
+from datetime import datetime
 import requests
 from random import randint
 import os
 import wikipedia
 import json
+import re
 
 apod = 0
 gtt = ""
 w_api_key = "76ce09d339c3310433855fceee368b9d"
 print(os.getcwd())
 imgfolder = os.path.join('static', 'img')
-
 app=Flask(__name__,template_folder='templates')
 app.config['UPLOAD_FOLDER'] = imgfolder
+blankimg = "<img src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png")+">"
 
 @app.route('/')
 def form():
-    return render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"), focus = "autofocus")
+    return render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>")
 
+def img(x):
+    if "youtube" in x:
+        return "<iframe src=" + os.path.join(x)+' allow="autoplay; encrypted-media">'
+    else:
+        return "<img src=" + os.path.join(x)+'>'
 
 @app.route('/', methods=['POST'])
 def main():
@@ -31,16 +37,18 @@ def main():
         if "yes" in user_input:
             print("yes")
             explain = gtt["explanation"].split(".")[0:3]
-            explain = str(explain).replace("['", "ű")
-            explain = explain.replace("']", "ű")
+            explain = str(explain).replace("['", "---")
+            explain = explain.replace("']", "---")
             explain = explain.replace("', '", ".")
-            explain = explain.translate({ord(i): None for i in 'ű'})
+            explain = explain.replace("', "+'"', ".")
+            explain = explain.replace('", '+"'", ".")
+            explain = explain.translate({ord(i): None for i in '---'})
             explain = explain + "."
             apod = 0
-            return render_template('index.html', image = "src=" + gtt["url"], wiki = str(explain))
+            return render_template('index.html', image = img(gtt["url"]), wiki = str(explain))
         elif "no" in user_input:
             apod = 0
-            return render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"), wiki = "Okay.")
+            return render_template('index.html', wiki = "Okay.")
         else:
             apod = 1
             return render_template('index.html', image = "src=" + gtt["url"], wiki = "Answer with yes or no please!")
@@ -55,14 +63,14 @@ def main():
         if "date" in user_input:
             now = datetime.now()
             current_date = now.strftime("%D")
-            return  render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"), wiki = " The current time is: " + current_time + "<br> And the current date is: " + current_date)
+            return  render_template('index.html', wiki = " The current time is: " + current_time + "<br> And the current date is: " + current_date)
         else:
-            return render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"), wiki="The current time is: " + current_time)
+            return render_template('index.html', wiki="The current time is: " + current_time)
     
     elif "date" in user_input:
         now = datetime.now()
         current_date = now.strftime("%D")
-        return render_template('index.html', image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"), wiki="The current date is: " + current_date)
+        return render_template('index.html', wiki="The current date is: " + current_date)
 
     #--------------------------------Weather--------------------------------#
     elif "weather" in user_input.lower():
@@ -99,7 +107,7 @@ def main():
             w = weather_descriptionm + str(randint(1,3))+".png" 
             imgpath = os.path.join(app.config['UPLOAD_FOLDER'], w)
             
-            return render_template('index.html', image = "src="+imgpath, wiki = "The current temperature in " + city_name + " is: " + str(celsius).replace('(', '')[:3] + "C°" + "<br>" + "The weather in " + city_name + " is: " + str(weather_description))
+            return render_template('index.html', image = img(imgpath), wiki = "The current temperature in " + city_name + " is: " + str(celsius).replace('(', '')[:3] + "C°" + "<br>" + "The weather in " + city_name + " is: " + str(weather_description))
     #--------------------------------Weather--------------------------------#
     elif "search" in user_input:
         try:
@@ -107,18 +115,33 @@ def main():
             data = lowcase.replace("search ", "")
             data = data.replace("for", "")
             new = data.translate({ord(i): None for i in ' '})
-            return render_template('index.html', wiki = wikipedia.summary(new, sentences=5), image = "src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png"))
+            return render_template('index.html', wiki = wikipedia.summary(new, sentences=5))
         except:
             return "Wikipedia page was not found" 
 
     elif "picture of the day" in user_input:
-        apod = 1
-        f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
-        data = requests.get(f)
-        gtt = json.loads(data.text)
-        return render_template('index.html', wiki = "The astronomy picture of the day is: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
-                                "Do you want to hear the explanation of this picture?", image = "src=" + gtt["url"])
+        if "on" in user_input:
+            apod = 1
+            on = user_input.split("on ")[0::]
+            print("onstrip", on)
+            on = on[1]
+            print(on)
+            f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
+            params = "date=" + on
+            data = requests.get(f,params=params)
+            gtt = json.loads(data.text)
+            print(gtt)
+            return render_template('index.html', wiki = "The astronomy picture on " + on + "was: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
+                                    "Do you want to hear the explanation of this picture?", image = img(gtt["url"]))
 
+        elif "on" not in user_input:
+            apod = 1
+            f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
+            data = requests.get(f)
+            gtt = json.loads(data.text)
+            return render_template('index.html', wiki = "The astronomy picture of the day is: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
+                                    "Do you want to hear the explanation of this picture?", image = img(gtt["url"]))
+        
 
     
 if __name__ == '__main__':

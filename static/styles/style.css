@@ -16,9 +16,13 @@ html{
     overflow: hidden;
     
 }
-.img img{
+.img, .img img{
     height:65vh; 
     width:100vh;
+}
+.img iframe{
+    height: 60vh;
+    width: 95vh;
 }
 .form{
     width: 99%;
@@ -100,4 +104,11 @@ form{
     margin: 0;
     color: rgb(150, 255, 101);
     font-size: 25px;
+}
+.img p{
+    display:run-in;
+    margin: 0;
+    padding: 5px;
+    border: none;
+    color: rgb(150, 255, 101);
 }

@@ -5,7 +5,8 @@ from random import randint
 import os
 import wikipedia
 import json
-import re
+from geopy import Nominatim
+import reverse_geocoder as rg
 
 apod = 0
 gtt = ""
@@ -15,14 +16,21 @@ imgfolder = os.path.join('static', 'img')
 app=Flask(__name__,template_folder='templates')
 app.config['UPLOAD_FOLDER'] = imgfolder
 blankimg = "<img src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png")+">"
+geoapp = Nominatim(user_agent="Lajos8000")
+
+def Geocode(cord):
+    result = rg.search(cord)
+    return result
+
 
 @app.route('/')
 def form():
-    return render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>")
+    return render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>", 
+    wiki= "<br> + date/time <br> + weather <br> + time(Budapest only) <br> + weather <br> + picture of the day", TextTitle = "<h1> The keyword list </h1>")
 
 def img(x):
     if "youtube" in x:
-        return "<iframe src=" + os.path.join(x)+' allow="autoplay; encrypted-media">'
+        return "<iframe src=" + os.path.join(x)+' allow="autoplay; encrypted-media">'     
     else:
         return "<img src=" + os.path.join(x)+'>'
 
@@ -63,6 +71,9 @@ def main():
         else:
             return render_template('index.html', wiki="The current time is: " + current_time)
     
+    elif "home" in user_input:
+        return form()
+
     elif "date" in user_input:
         now = datetime.now()
         current_date = now.strftime("%D")
@@ -138,6 +149,21 @@ def main():
             return render_template('index.html', wiki = "The astronomy picture of the day is: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
                                     "Do you want to hear the explanation of this picture?", image = img(gtt["url"]))
         
+    elif "international space stacion" in user_input or "iss" in user_input:
+        data = requests.get("http://api.open-notify.org/iss-now.json")
+        iss = json.loads(data.text)
+        lat = iss['iss_position']['latitude']
+        long = iss['iss_position']['longitude']
+        print(lat)
+        print(long)
+        cords =(lat, long)
+        pos = Geocode(cords)
+        print(pos)
+        state = str(pos[0])
+        #country = str(pos[1])
+        position = "The International Space Station is currently over " + state #+ "in" + country
+        return render_template('index.html', wiki=position)
+
 
     
 if __name__ == '__main__':

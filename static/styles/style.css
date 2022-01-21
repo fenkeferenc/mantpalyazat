@@ -28,6 +28,9 @@ html{
     width: 99%;
     padding-top: 60vh;
 }
+.form p{
+    font-size: 20px;
+}
 #outp{
     position: absolute;
     right: 50%;
@@ -104,6 +107,11 @@ form{
     margin: 0;
     color: rgb(150, 255, 101);
     font-size: 25px;
+}
+.background-2 h1{
+    justify-content: center;
+    align-items: center;
+    
 }
 .img p{
     display:run-in;

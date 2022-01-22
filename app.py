@@ -7,6 +7,7 @@ import wikipedia
 import json
 from geopy import Nominatim
 import reverse_geocoder as rg
+from countryconvert import get_country_name
 
 apod = 0
 gtt = ""
@@ -158,10 +159,12 @@ def main():
         print(long)
         cords =(lat, long)
         pos = Geocode(cords)
+        pos = dict(pos[0])
         print(pos)
-        state = str(pos[0])
-        #country = str(pos[1])
-        position = "The International Space Station is currently over " + state #+ "in" + country
+        state = pos.get("name")
+        country = pos.get("cc")
+        country = get_country_name(country)
+        position = "The International Space Station is currently over " + state + "in " + country
         return render_template('index.html', wiki=position)
 
 

@@ -163,8 +163,8 @@ def main():
         print(pos)
         state = pos.get("name")
         country = pos.get("cc")
-        country = get_country_name(country)
-        position = "The International Space Station is currently over " + state + "in " + country
+        country = str(get_country_name(country))
+        position = "The International Space Station is currently over " + state + " in " + country
         return render_template('index.html', wiki=position)
 
 

@@ -20,10 +20,6 @@ html{
     height:65vh; 
     width:100vh;
 }
-.img iframe{
-    height: 60vh;
-    width: 95vh;
-}
 .form{
     width: 99%;
     padding-top: 60vh;
@@ -114,9 +110,20 @@ form{
     
 }
 .img p{
-    display:run-in;
     margin: 0;
     padding: 5px;
     border: none;
     color: rgb(150, 255, 101);
+}
+.orbit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+.orbit iframe{
+    position: relative;
+    height: 200px;
+    width: 65%;
+    margin: 0;
 }

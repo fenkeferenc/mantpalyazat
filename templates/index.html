@@ -10,7 +10,15 @@
             <div class="img">
                 {{ Welcometext|safe}}
                 {{ image|safe }}
-                 
+                <div id="av-orbit" class="orbit"></div>
+                <script>
+                    var avOrbitProperties = {
+                        size: 'large',
+                        lang: 'en'
+                    };
+                </script>
+                
+                <script {{ script|safe }} src="{{ url_for('static',filename='orbit.js') }}"></script>
             </div>
             <div class="form">
                 <form method="POST">

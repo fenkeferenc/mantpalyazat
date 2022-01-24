@@ -83,6 +83,26 @@ def main():
         current_date = now.strftime("%D")
         return render_template('index.html', wiki="The current date is: " + current_date)
 
+    elif "weather" in user_input and "mars" in user_input:
+        f = r"https://api.maas2.apollorion.com"
+        response = requests.get(f)
+        result = json.loads(response.text)
+        min_temp = int(result["min_temp"])
+        max_temp = int(result["max_temp"])
+        avg_temp = (min_temp + max_temp)/2
+        avg_temp = str(avg_temp)
+        t = str(result["terrestrial_date"])
+        pressure = str(result["pressure"])
+        opacity = str(result["atmo_opacity"])
+        sol = str(result["sol"])
+        timestamp = str(t.split("T")[0])
+        return render_template('index.html', wiki="The average temperature on Mars in this month was: <br>"+ avg_temp + "C <br><br>" +
+                                "The weather according to the opacity of the atmosphere is: <br>" + opacity + "<br><br>" + 
+                                "Average atmospheric pressure: <br>" + pressure + " Pascal <br><br>" +
+                                "This was the " + sol +". "+"report since 2012-08-07" +"<br>"+
+                                "Updated on: " + timestamp)
+
+
     #--------------------------------Weather--------------------------------#
     elif "weather" in user_input.lower():
         if "in" in user_input:

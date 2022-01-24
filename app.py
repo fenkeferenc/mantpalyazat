@@ -29,6 +29,9 @@ def form():
     return render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>", 
     wiki= "<br> + date/time <br> + weather <br> + time(Budapest only) <br> + weather <br> + picture of the day", TextTitle = "<h1> The keyword list </h1>")
 
+@app.route('/frame')
+def frame():
+    return render_template('widget.html')
 def img(x):
     if "youtube" in x:
         return "<iframe src=" + os.path.join(x)+' allow="autoplay; encrypted-media">'     
@@ -165,7 +168,7 @@ def main():
         country = pos.get("cc")
         country = str(get_country_name(country))
         position = "The International Space Station is currently over " + state + " in " + country
-        return render_template('index.html', wiki=position, script = "")
+        return render_template('index.html', wiki=position, image='<iframe src="frame"></iframe>')
 
 
     

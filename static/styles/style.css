@@ -14,6 +14,8 @@ html{
     border-color: transparent;
     border-radius: 1rem;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
     
 }
 .img, .img img{
@@ -115,15 +117,10 @@ form{
     border: none;
     color: rgb(150, 255, 101);
 }
-.orbit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 10px;
-}
-.orbit iframe{
-    position: relative;
-    height: 200px;
-    width: 65%;
+iframe{
+    border: 0;
+    width: 66%;
+    height: 41%;
     margin: 0;
+    padding: 0;
 }

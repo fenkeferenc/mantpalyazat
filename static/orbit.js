@@ -23,7 +23,6 @@
 		var lang  = (p.lang && ['de'].includes(p.lang)) ? p.lang : 'en';
 
 		var url = 'https://astroviewer.net/iss/widgets/orbit-widget.php?size=' + size + '&lang=' + lang;
-//		var url = 'http://localhost:8058/SatPasses2/widgets/orbit-widget.php?size=' + size + '&lang=' + lang;
 
 		var x = '';
 		x += '<iframe id="orbit-iframe" src="' + url + '" sandbox="allow-scripts allow-same-origin allow-popups" scrolling="no" style="overflow:hidden; border: 1px solid #ccc;"></iframe>';

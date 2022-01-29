@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
+
 @media only screen and (max-width: 600px) {
     .img img{
       background-color: lightblue;
     }
-  }
+}
+
+*{
+    font-family: 'Arimo';
+}
+
 html{
     background-image: url('/static/img/background.webp');
     width: 100%;

@@ -15,6 +15,7 @@ w_api_key = "76ce09d339c3310433855fceee368b9d"
 print(os.getcwd())
 imgfolder = os.path.join('static', 'img')
 app=Flask(__name__,template_folder='templates')
+app.secret_key = 'Øæw]:©p²T¶8ÛMU;'
 app.config['UPLOAD_FOLDER'] = imgfolder
 blankimg = "<img src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png")+">"
 geoapp = Nominatim(user_agent="Lajos8000")
@@ -26,8 +27,9 @@ def Geocode(cord):
 
 @app.route('/')
 def form():
-    return render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>", 
+    home = render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>", 
     wiki= "<br> + date/time <br> + weather <br> + time(Budapest only) <br> + weather <br> + picture of the day", TextTitle = "<h1> The keyword list </h1>")
+    return home
 
 @app.route('/frame')
 def frame():
@@ -59,7 +61,7 @@ def main():
             return render_template('index.html', wiki = "Okay.")
         else:
             apod = 1
-            return render_template('index.html', image = "src=" + gtt["url"], wiki = "Answer with yes or no please!")
+            return render_template('index.html', image = img(gtt["url"]), wiki = "Answer with yes or no please!")
 
     elif "time" in user_input:
         if "in" in user_input:
@@ -100,7 +102,8 @@ def main():
                                 "The weather according to the opacity of the atmosphere is: <br>" + opacity + "<br><br>" + 
                                 "Average atmospheric pressure: <br>" + pressure + " Pascal <br><br>" +
                                 "This was the " + sol +". "+"report since 2012-08-07" +"<br>"+
-                                "Updated on: " + timestamp)
+                                "Updated on: " + timestamp,
+                                image = img("/static/img/rover1.png"))
 
 
     #--------------------------------Weather--------------------------------#
@@ -190,7 +193,7 @@ def main():
         position = "The International Space Station is currently over " + state + " in " + country
         return render_template('index.html', wiki=position, image='<iframe src="frame"></iframe>')
 
+    return form()
 
-    
 if __name__ == '__main__':
-    app.run(host="192.168.0.20", port=5000)
+    app.run(host="192.168.0.13", port=5000)

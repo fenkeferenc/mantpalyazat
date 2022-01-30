@@ -176,7 +176,7 @@ def main():
             return render_template('index.html', wiki = "The astronomy picture of the day is: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
                                     "Do you want to hear the explanation of this picture?", image = img(gtt["url"]))
         
-    elif "international space stacion" in user_input or "iss" in user_input:
+    elif "international space station" in user_input or "iss" in user_input:
         data = requests.get("http://api.open-notify.org/iss-now.json")
         iss = json.loads(data.text)
         lat = iss['iss_position']['latitude']
@@ -192,6 +192,11 @@ def main():
         country = str(get_country_name(country))
         position = "The International Space Station is currently over " + state + " in " + country
         return render_template('index.html', wiki=position, image='<iframe src="frame"></iframe>')
+
+    elif "news" in user_input:
+        data = requests.get('https://api.spaceflightnewsapi.net/v3/articles?_limit=5&_contains=nasa')
+        news = json.loads(data.text)
+        print(news)
 
     return form()
 

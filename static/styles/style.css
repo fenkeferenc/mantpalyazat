@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
 
 @media only screen and (max-width: 600px) {
-    .img img{
+    body {
       background-color: lightblue;
     }
-}
+  }
 
 *{
     font-family: 'Arimo';
@@ -17,6 +17,7 @@ html{
 .img{
     float: left;
     margin: 0;
+    margin-left: 2rem;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border-color: transparent;
     border-radius: 1rem;
@@ -27,7 +28,7 @@ html{
 }
 .img, .img img{
     height:65vh; 
-    width:100vh;
+    width: 45%;
 }
 .form{
     width: 99%;

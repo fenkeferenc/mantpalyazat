@@ -18,27 +18,29 @@ app=Flask(__name__,template_folder='templates')
 app.secret_key = 'Øæw]:©p²T¶8ÛMU;'
 app.config['UPLOAD_FOLDER'] = imgfolder
 blankimg = "<img src=" + os.path.join(app.config['UPLOAD_FOLDER'], "1x1.png")+">"
-geoapp = Nominatim(user_agent="Lajos8000")
+geoapp = Nominatim(user_agent="Userid18479627")
 
 def Geocode(cord):
     result = rg.search(cord)
     return result
 
-
-@app.route('/')
-def form():
-    home = render_template('index.html', Welcometext = "<p> This program was made using python flask directory. <br> There are multiple things, you can ask from, but this program is not a nasa-quality Artifical Intelligence :) </p>", 
-    wiki= "<br> + date/time <br> + weather <br> + time(Budapest only) <br> + weather <br> + picture of the day", TextTitle = "<h1> The keyword list </h1>")
-    return home
-
-@app.route('/frame')
-def frame():
-    return render_template('widget.html')
 def img(x):
     if "youtube" in x:
         return "<iframe src=" + os.path.join(x)+' allow="autoplay; encrypted-media">'     
     else:
         return "<img src=" + os.path.join(x)+'>'
+
+@app.route('/')
+def form():
+    home = render_template('index.html', image = "<img src=" + os.path.join(app.config['UPLOAD_FOLDER'], "epic" + str(randint(1,3)) +".jpg")+">", 
+    wiki= "<br> + date/time <br> + weather <br> + weather on the Mars <br> + Picture of the day *on [Year-Month-Day]* <br> + International Space Station, ISS <br> + Search (using wikipedia) *title*", TextTitle = "<h1> The keyword list </h1>",
+    Welcometext = "<style> .img{background-color: #000} </style>")
+    return home
+
+@app.route('/frame')
+def frame():
+    return render_template('widget.html')
+
 
 @app.route('/', methods=['POST'])
 def main():

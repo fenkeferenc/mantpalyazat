@@ -1,15 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
 
-@media only screen and (max-width: 600px) {
-    body {
-      background-color: lightblue;
-    }
-  }
-
 *{
     font-family: 'Arimo';
 }
-
+:root{
+    --textcolor: rgb(60, 200, 255);
+}
 html{
     background-image: url('/static/img/background.webp');
     width: 100%;
@@ -24,18 +20,13 @@ html{
     overflow: hidden;
     display: flex;
     justify-content: center;
-    
-}
-.img, .img img{
     height:65vh; 
-    width: 45%;
+    width: 46.5%;
+    
 }
 .form{
     width: 99%;
     padding-top: 60vh;
-}
-.form p{
-    font-size: 20px;
 }
 #outp{
     position: absolute;
@@ -96,6 +87,11 @@ form{
     transition: all 0.4s ease-in-out;
     
 }
+.form button:hover{
+    color: #000;
+    background-color: rgb(178, 254, 177);
+    cursor: pointer;
+}
 .background-2{      
     position: absolute;
     background-color: rgba(0,0,0, 0.4);
@@ -111,23 +107,17 @@ form{
 }
 .background-2 p{
     margin: 0;
-    color: rgb(150, 255, 101);
+    color: var(--textcolor);
     font-size: 25px;
 }
 .background-2 h1{
-    justify-content: center;
-    align-items: center;
+    color: var(--textcolor);
     
 }
-.img p{
-    margin: 0;
-    padding: 5px;
-    border: none;
-    color: rgb(150, 255, 101);
-}
+
 iframe{
     border: 0;
-    width: 66%;
+    width: 73%;
     height: 41%;
     margin: 0;
     padding: 0;

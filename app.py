@@ -8,6 +8,7 @@ import json
 from geopy import Nominatim
 import reverse_geocoder as rg
 from countryconvert import get_country_name
+from news import news
 
 apod = 0
 gtt = ""
@@ -196,9 +197,8 @@ def main():
         return render_template('index.html', wiki=position, image='<iframe src="frame"></iframe>')
 
     elif "news" in user_input:
-        data = requests.get('https://api.spaceflightnewsapi.net/v3/articles?_limit=5&_contains=nasa')
-        news = json.loads(data.text)
-        print(news)
+        title, summary, url, imgurl, = news()[0], news()[1], news()[2], news()[3]
+        return render_template('index.html', TextTitle="<h1>"+ '<a href="'+url+'">'  + title + "</a></h1>" + "<br>", wiki=summary, image='<img src="' + imgurl + '">'+'</a>',)
 
     return form()
 

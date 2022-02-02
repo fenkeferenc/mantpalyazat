@@ -6,6 +6,7 @@
 :root{
     --textcolor: rgb(60, 200, 255);
 }
+
 html{
     background-image: url('/static/img/background.webp');
     width: 100%;
@@ -114,7 +115,6 @@ form{
     color: var(--textcolor);
     
 }
-
 iframe{
     border: 0;
     width: 73%;

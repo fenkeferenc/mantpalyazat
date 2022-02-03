@@ -34,8 +34,7 @@ def img(x):
 @app.route('/')
 def form():
     home = render_template('index.html', image = "<img src=" + os.path.join(app.config['UPLOAD_FOLDER'], "epic" + str(randint(1,3)) +".jpg")+">", 
-    wiki= "<br> + date/time <br> + weather <br> + weather on the Mars <br> + Picture of the day *on [Year-Month-Day]* <br> + International Space Station, ISS <br> + Search (using wikipedia) *title* <br> + News(Latest space exploration news)", TextTitle = "<h1> The keyword list </h1>",
-    Welcometext = "<style> .img{background-color: #000} </style>")
+    wiki= "<br> + date/time <br> + weather <br> + weather on the Mars <br> + Picture of the day *on [Year-Month-Day]* <br> + International Space Station, ISS <br> + Search (using wikipedia) *title* <br> + News(Latest space exploration news)", TextTitle = "<h1> The keyword list </h1>")
     return home
 
 @app.route('/frame')

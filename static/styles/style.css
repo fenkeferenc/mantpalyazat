@@ -13,6 +13,7 @@ html{
     width: 100%;
 }
 .img{
+    background-color: rgba(0, 0, 0, 0.765);
     float: left;
     margin: 0;
     margin-left: 2rem;

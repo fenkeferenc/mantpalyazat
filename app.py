@@ -153,9 +153,9 @@ def main():
             new = data.translate({ord(i): None for i in ' '})
             return render_template('index.html', wiki = wikipedia.summary(new, sentences=5))
         except:
-            return "Wikipedia page was not found" 
+            return render_template('index.html', wiki = "Wikipedia page was not found, type 'home' to return to the home page")
 
-    elif "picture of the day" in user_input:
+    elif "picture of the day" in user_input or "apod" in user_input:
         if "on" in user_input:
             apod = 1
             on = user_input.split("on ")[0::]

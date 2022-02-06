@@ -115,6 +115,7 @@ form{
     overflow: hidden;
     color: var(--textcolor);
     font-size: 25px;
+    padding-left: 3.5px;
 }
 .background-2 h1{
     color: var(--textcolor);
@@ -135,4 +136,38 @@ iframe{
     width: 100%;
     color: var(--textcolor);
 
+}
+a, a:visited{
+    display:contents;
+    color: var(--textcolor);
+}
+#doc{
+    display: contents;
+    color: #000;
+    transition: all .4s;
+}
+#doc:hover{
+    color: rgb(88, 88, 88);
+}
+h2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: -10px;
+    padding: 0;
+    border: 0;
+    text-decoration: underline rgb(88, 88, 88);
+}
+#title{
+    transition: all .4s;
+    text-decoration: underline #fff;
+}
+#title:hover{
+    filter:drop-shadow(4px 8px 12px black);
+}
+#title:active{
+    filter:drop-shadow(4px 8px 12px rgb(136, 255, 99))
+}
+#link{
+    text-decoration: underline #fff;
 }

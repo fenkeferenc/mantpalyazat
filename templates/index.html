@@ -9,10 +9,10 @@
 </html>
     
     <body>
-        <h1 id="title"> Cím </h1>
+        <h1 id="title"> <a href="http://localhost:5000"> {{ doc }} {{ click }} </a> </h1> 
+        <h2> <a href="https://github.com/fenkeferenc/mantpalyazat" id="doc" target="_blank"> Dokumentation </a></h2>
         <div class="background"></div>
-            <div class="img">
-                {{ Welcometext|safe}}
+            <div class="img">                
                 {{ image|safe }}
             </div>
             <div class="form">

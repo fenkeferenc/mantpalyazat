@@ -53,23 +53,21 @@ def main():
     raw_input = request.form['variable']
     user_input = str(raw_input.lower())
     if apod == 1:
-        print("apod = 1")
-        if "yes" in user_input:
-            print("yes")
-            explain = gtt["explanation"].split(".")[0:3]
-            apod = 0
-            out = ""
-            for i in range(0,len(explain)):
-                out += explain[i] + "."
-            return render_template('index.html',click="Return to the main page", image = img(gtt["url"]), wiki = out)
-        elif "no" in user_input:
-            apod = 0
-            return render_template('index.html',click="Return to the main page", wiki = "Okay.")
-        elif "home" in user_input:
-            return form()
-        else:
-            apod = 1
-            return render_template('index.html',click="Return to the main page", image = img(gtt["url"]), wiki = "Answer with yes or no please!")
+        apod = 0
+        try:
+            if "yes" in user_input:
+                print("yes")
+                explain = gtt["explanation"].split(".")[0:3]
+                out = ""
+                for i in range(0,len(explain)):
+                    out += explain[i] + "."
+                return render_template('index.html',click="Return to the main page", image = img(gtt["url"]), wiki = out)
+            elif "no" in user_input:
+                return render_template('index.html',click="Return to the main page", wiki = "Okay.")
+            else:
+                pass
+        except:
+            pass
 
     elif "time" in user_input:
         if "in" in user_input:
@@ -168,18 +166,23 @@ def main():
 
     elif "picture of the day" in user_input or "apod" in user_input:
         if "on" in user_input:
-            apod = 1
-            on = user_input.split("on ")[0::]
-            print("onstrip", on)
-            on = on[1]
-            print(on)
-            f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
-            params = "date=" + on
-            data = requests.get(f,params=params)
-            gtt = json.loads(data.text)
-            print(gtt)
-            return render_template('index.html', click="Return to the main page", wiki = "The astronomy picture on " + on + "was: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
-                                    "Do you want to hear the explanation of this picture?", image = img(gtt["url"]))
+            try:
+                
+                on = user_input.split("on ")[0::]
+                print("onstrip", on)
+                on = on[1]
+                print(on)
+                f = r"https://api.nasa.gov/planetary/apod?api_key=XMqdRJg4lgeRUm0N1ETvfUvymjgmfhXJ7ot2Udgj"
+                params = "date=" + on
+                data = requests.get(f,params=params)
+                gtt = json.loads(data.text)
+                err = dict(gtt)
+                print(gtt)
+                apod = 1
+                return render_template('index.html', click="Return to the main page", wiki = "The astronomy picture on " + on + "was: " + "<br> <b>" + gtt["title"] + " </b> <br> <br>" +
+                                        "Do you want to hear the explanation of this picture?", image = img(gtt["url"]))
+            except:
+                return render_template('index.html',click="Return to the main page", wiki=err.get("msg"))
 
         elif "on" not in user_input:
             apod = 1

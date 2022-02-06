@@ -29,7 +29,11 @@ html{
 }
 .form{
     width: 99%;
-    padding-top: 60vh;
+    height: 78%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
 }
 #outp{
     position: absolute;

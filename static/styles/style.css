@@ -175,3 +175,6 @@ h2{
 #link{
     text-decoration: underline #fff;
 }
+img{
+    color: var(--textcolor);
+}

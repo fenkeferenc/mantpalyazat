@@ -27,7 +27,7 @@ def Geocode(cord):
 
 def img(x):
     if "youtube" in x:
-        return "<iframe src=" + os.path.join(x)+' allow="autoplay; encrypted-media">'     
+        return '<img src=Errortrigger alt="Error: Image file format is mp4. Try using another date">'
     else:
         return "<img src=" + os.path.join(x)+'>'
 
